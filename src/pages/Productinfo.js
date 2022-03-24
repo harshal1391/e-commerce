@@ -1,10 +1,11 @@
 import React from "react";
+import Layout from "../components/Layout";
 
 function Productinfo() {
   return (
-    <div>
+    <Layout>
       <h1>Product info</h1>
-    </div>
+    </Layout>
   );
 }
 
