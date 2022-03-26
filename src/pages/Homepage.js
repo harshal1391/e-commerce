@@ -1,44 +1,58 @@
-import React from 'react'
-import Layout from '../components/Layout';
+import React, { useEffect, useState } from "react";
+import Layout from "../components/Layout";
 import { collection, addDoc, getDocs } from "firebase/firestore";
-import fireDB from '../fireConfig';
+import fireDB from "../fireConfig";
+import { fireproducts } from "../firecommerce-products";
+import { async } from "@firebase/util";
 
 function Homepage() {
+  const [products, setProducts] = useState([]);
 
-   async function adddata(){
-       try {
-           await addDoc(collection(fireDB, "users"), {
-             name: "Kashyapi",
-             age: 2.5,
-           });
+  useEffect(() => {
+    getData();
+  }, []);
 
-       } catch (error) {
-           console.log(error)
-           
-       }
+  async function getData() {
+    try {
+      const users = await getDocs(collection(fireDB, "products"));
+      const productsArray = [];
+      users.forEach((doc) => {
+        const obj = {
+          id: doc.id,
+          ...doc.data(),
+        };
+        productsArray.push(obj);
+      });
+      setProducts(productsArray);
+    } catch (error) {
+      console.log(error);
     }
-    async function getData() {
-      try {
-       const users = await getDocs(collection(fireDB, "users"), {
-          name: "Kashyapi",
-          age: 2.5,
-        });
-        users.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
-          console.log(doc.id, " => ", doc.data());
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    return (
-      <Layout>
-        <h1>Home</h1>
+  }
 
-        <button onClick={adddata}>add data to firebase</button>
-        <button onClick={getData}>get data from firebase</button>
-      </Layout>
-    );
+  return (
+    <Layout>
+      <div className="container">
+          <div className="row">
+              {products.map((product) => {
+                  return (
+                    <div className="col-md-4">
+                      <div className="m-2 p-1 product">
+                        <p>{product.title}</p>
+                        <div className="text-center">
+                          <img
+                            src={product.image}
+                            alt=""
+                            className="product-img"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  );
+              })}
+          </div>
+      </div>
+    </Layout>
+  );
 }
 
 export default Homepage;
