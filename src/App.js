@@ -18,7 +18,7 @@ function App() {
           <Route path="/" exact element={<Homepage />} />
           <Route path="/login" exact element={<LoginPage />} />
           <Route path="/register" exact element={<RegisterPage />} />
-          <Route path="/productinfo" exact element={<Productinfo />} />
+          <Route path="/productinfo/:productid" exact element={<Productinfo />} />
           <Route path="/cart" exact element={<CartPage />} />
         </Routes>
       </BrowserRouter>
