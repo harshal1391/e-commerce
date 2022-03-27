@@ -8,7 +8,7 @@ import Productinfo from "./pages/Productinfo";
 import CartPage from "./pages/CartPage";
 
 import './stylesheets/layout.css';
-import "./stylesheets/product.css";
+import "./stylesheets/products.css";
 
 function App() {
   return (

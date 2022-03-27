@@ -9,22 +9,26 @@
 .navbar {
   background-color: #003f5c !important;
 }
+
 .navbar-brand {
   color: #fff !important;
   font-weight: bold;
 }
+
 .nav-link {
   color: #fff !important;
 }
+
 .content {
   padding-top: 80px;
 }
+
 .footer {
   padding: 10px;
   text-align: center;
   background-color: #003f5c;
   color: white;
-  position: absolute;
+  position: relative;
   bottom: 0;
   left: 0;
   right: 0;
@@ -40,4 +44,16 @@ button {
 
 button:hover {
   background-color: tomato;
+}
+
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.spinner-border {
+  height: 100px;
+  width: 100px;
 }
