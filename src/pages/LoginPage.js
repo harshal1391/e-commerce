@@ -1,13 +1,33 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { toast } from "react-toastify";
+import Loader from "../components/Loader";
 
 function LoginPage() {
+  const auth = getAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const login = async () => {
+    try {
+      setLoading(true);
+      let response = await signInWithEmailAndPassword(auth, email, password);
+      localStorage.setItem("currentUser", JSON.stringify(response));
+      toast.success("User logged in successfully");
+      setLoading(false);
+      window.location.href = "/";
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to login the user.");
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="login-parent">
+      {loading && <Loader />}
       <div className="row justify-content-center">
         <div className="col-md-5 z1">
           <div className="login-form">
@@ -32,7 +52,9 @@ function LoginPage() {
                 setPassword(passwd.target.value);
               }}
             />
-            <button className="my-3">Sign In</button>
+            <button className="my-3" onClick={login}>
+              Sign In
+            </button>
 
             <hr />
 
