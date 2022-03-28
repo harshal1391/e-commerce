@@ -9,7 +9,7 @@ function Header() {
 
   const logout = () => {
     localStorage.removeItem("currentUser");
-    window.location.reload();
+    window.location.href = "/login";
   };
 
   return (

@@ -1,14 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { toast } from "react-toastify";
 import Loader from "../components/Loader";
+import Homepage from "./Homepage";
 
 function LoginPage() {
   const auth = getAuth();
   const [email, setEmail] = useState("");
+  const [user, setUser] = useState();
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("currentUser");
+    if (loggedInUser) {
+      const foundUser = JSON.parse(loggedInUser);
+      setUser(foundUser);
+    }
+  }, []);
 
   const login = async () => {
     try {
@@ -24,6 +34,10 @@ function LoginPage() {
       setLoading(false);
     }
   };
+
+  if (user) {
+    return <Homepage />;
+  }
 
   return (
     <div className="login-parent">
